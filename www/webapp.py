@@ -9,6 +9,9 @@ from jinja2 import Environment, FileSystemLoader
 
 import orm
 from coroweb import add_routes, add_static
+from config import configs
+
+#import pdb
 
 def jinja2_init(app, **kw):
     logging.info('Jinja2 init...')
@@ -29,7 +32,7 @@ def jinja2_init(app, **kw):
     if filters is not None:
         for name, fun in filters.items():
             env.filters[name] = fun
-    app[__templating__] = env
+    app['__templating__'] = env
 
 async def logger_factory(app, handler):
     async def logger(request):
@@ -63,7 +66,7 @@ async def response_factory(app, handler):
                 resp.content_type = 'application/json;charset=utf-8'
                 return resp
             else:
-                resp = web.Response(body = app[__templating__].get_template(template).render(**r).encode('utf-8'))
+                resp = web.Response(body = app['__templating__'].get_template(template).render(**r).encode('utf-8'))
                 resp.content_type = 'text/html;charset=utf-8'
                 return resp
         if isinstance(r, int) and r >= 100 and r <= 600:
@@ -94,15 +97,16 @@ def datetime_filter(t):
     return u'%s年%s月%s日' % (dt.year, dt.month, dt.day)
 
 async def init(loop):
-    await orm.create_pool(loop = loop, host = '127.0.0.1', port = '3306', user = 'g11303', password = 'g11303', db = 'sanlisi')
+    await orm.create_pool(loop = loop, **configs.db)
     app = web.Application(loop=loop, middlewares = [
         logger_factory, response_factory
         ])
+    #pdb.set_trace()
     jinja2_init(app, filters = dict(datetime = datetime_filter))
-    add_routes(app, 'hanlers')
+    add_routes(app, 'handlers')
     add_static(app)
-    srv = await loop.create_server(app.make_handler(), '192.168.1.8', 8888)
-    logging.info('server started at 192.168.1.8:8888...')
+    srv = await loop.create_server(app.make_handler(), '192.168.124.12', 8888)
+    logging.info('server started at 192.168.124.12:8888...')
     return srv
 
 loop=asyncio.get_event_loop()

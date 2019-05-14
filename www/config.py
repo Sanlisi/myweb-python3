@@ -26,16 +26,17 @@ def merge(default, override):
     myd = {} 
     for k, v in default.items():
         if k in override:
-            if isinstance(k, dict):
+            if isinstance(v, dict):
                 myd[k] = merge(v, override[k])
             else:
                 myd[k] = override[k]
         else:
             myd[k] = v
+    return myd
 
 def toDict(d):
     myd = Dict()
-    for k, v in myd.items():
+    for k, v in d.items():
         myd[k] = toDict(v) if isinstance(v, dict) else v
     return myd
 
@@ -45,6 +46,6 @@ try:
     import config_override
     configs = merge(configs, config_override.configs)
 except ImportError:
-    pass
+    raise ImportError('import config_override err') 
 
 configs = toDict(configs)

@@ -13,7 +13,7 @@ def get(path):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kw):
-            return func(&args, **kw)
+            return func(*args, **kw)
         wrapper.__method__ = 'GET'
         wrapper.__route__ = path
         return wrapper
@@ -51,7 +51,7 @@ def get_named_kw_args(fn):
 def has_named_kw_arg(fn):
     paras = inspect.signature(fn).parameters
     for name, value in paras.items():
-        if value.kind == inspect.Parameter.KERYWORD_ONLY:
+        if value.kind == inspect.Parameter.KEYWORD_ONLY:
             return True
 
 def has_var_kw_arg(fn):
@@ -130,7 +130,7 @@ class RequestHandler(object):
         logging.info('call with args: %s' % str(kw))
 
         try:
-            r = await fun(**kw)
+            r = await self._func(**kw)
             return r
         except APIError as e:
             return dict(error = e.error, data = e.data, message = e.message)
@@ -149,7 +149,7 @@ def add_route(app, fn):
         fn = asyncio.coroutine(fn)
 
     logging.info('add route %s %s=>%s(%s)' % (method, path, fn.__name__, ', '.join(inspect.signature(fn).parameters.keys())))
-    app.router.add_route(method, path, RequestHandle(app, fn))
+    app.router.add_route(method, path, RequestHandler(app, fn))
 
 def add_routes(app, module_name):
     n = module_name.rfind('.')
@@ -159,7 +159,7 @@ def add_routes(app, module_name):
         name = module_name[n + 1]
         mod = getattr(__import__(module_name[:n], globals(), locals()), name)
     for attr in dir(mod):
-        if attr.startwith('_'):
+        if attr.startswith('_'):
             continue
         fn = getattr(mod, attr)
         if callable(fn):
