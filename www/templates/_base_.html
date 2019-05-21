@@ -21,71 +21,70 @@
     <meta charset="utf-8" />
     {% block meta %}<!-- block meta  -->{% endblock %}
     <title>{% block title %} ? {% endblock %} - Sanlisi Webapp</title>
-    <link rel="stylesheet" href="/static/css/uikit.min.css">
-    <link rel="stylesheet" href="/static/css/uikit-rtl.min.css">
-	<link rel="stylesheet" href="/static/css/uikit.css">
-	<link rel="stylesheet" href="/static/css/uikit-rtl.css">
-    <link rel="stylesheet" href="/static/css/awesome.css" />
-    <script src="/static/js/uikit.min.js"></script>
-    <script src="/static/js/uikit-icons.min.js"></script>
-    <script src="/static/js/uikit.js"></script>
-    <script src="/static/js/uikit-icons.js"></script>
-    <script src="/static/js/awesome.js"></script>
+    <link rel="stylesheet" href="/static/css/uikit.gradient.min.css">
+	<link rel="stylesheet" href="/static/css/uikit.gradient.css">
+    <script src="/static/js/vendor/jquery.min.js"></script>
+    <script src="/static/js/uikit/uikit.min.js"></script>
+    <script src="/static/js/uikit/uikit.js"></script>
     {% block beforehead %}<!-- before head  -->{% endblock %}
 </head>
 <body>
-    <nav class="uk-navbar uk-navbar-attached uk-margin-bottom">
-        <div class="uk-container uk-container-center">
-            <a href="/" class="uk-navbar-brand">Sanlisi</a>
-            <ul class="uk-navbar-nav">
-                <li data-url="blogs"><a href="/"><i class="uk-icon-home"></i> 日志</a></li>
-                <li><a target="_blank" href=""><i class="uk-icon-book"></i> 教程</a></li>
-                <li><a target="_blank" href=""><i class="uk-icon-code"></i> 源码</a></li>
-            </ul>
-            <div class="uk-navbar-flip">
-                <ul class="uk-navbar-nav">
-                {% if __user__ %}
-                    <li class="uk-parent" data-uk-dropdown>
-                        <a href="#0"><i class="uk-icon-user"></i> {{ __user__.name }}</a>
-                        <div class="uk-dropdown uk-dropdown-navbar">
-                            <ul class="uk-nav uk-nav-navbar">
-                                <li><a href="/signout"><i class="uk-icon-sign-out"></i> 登出</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                {% else %}
-                    <li><a href="/signin"><i class="uk-icon-sign-in"></i> 登陆</a></li>
-                    <li><a href="/register"><i class="uk-icon-edit"></i> 注册</a></li>
-                {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="uk-container uk-container-center">
-        <div class="uk-grid">
-            <!-- content -->
-            {% block content %}
-            {% endblock %}
-            <!-- // content -->
-        </div>
-    </div>
-
-    <div class="uk-margin-large-top" style="background-color:#eee; border-top:1px solid #ccc;">
-        <div class="uk-container uk-container-center uk-text-center">
-            <div class="uk-panel uk-margin-top uk-margin-bottom">
-                <p>
-                    <a target="_blank" href="http://weibo.com/liaoxuefeng" class="uk-icon-button uk-icon-weibo"></a>
-                    <a target="_blank" href="https://github.com/michaelliao" class="uk-icon-button uk-icon-github"></a>
-                    <a target="_blank" href="http://www.linkedin.com/in/liaoxuefeng" class="uk-icon-button uk-icon-linkedin-square"></a>
-                    <a target="_blank" href="https://twitter.com/liaoxuefeng" class="uk-icon-button uk-icon-twitter"></a>
-                </p>
-                <p>Powered by <a href="http://awesome.liaoxuefeng.com">Sanlisi Webapp</a>. Copyright &copy; 2014. [<a href="/manage/" target="_blank">Manage</a>]</p>
-                <p><a href="http://www.sanlisi.com/" target="_blank">www.sanlisi.com</a>. All rights reserved.</p>
-                <a target="_blank" href="http://www.w3.org/TR/html5/"><i class="uk-icon-html5" style="font-size:64px; color: #444;"></i></a>
-            </div>
-
-        </div>
-    </div>
+    <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+	    <nav class="uk-navbar uk-margin-large-bottom">
+		    <a class="uk-navbar-brand uk-hidden-small" href="x">sanlisi</a>
+			<ul class="uk-navbar-nav uk-hidden-small">
+			    <li class="uk-active"><a href="xx">日志</a></li>
+				<li><a href="xx">教程</a></li>
+				<li><a href="xx">源码</a></li>
+				<li><a href="xx">登陆</a></li>
+			</ul>
+			<a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+			<div class="uk-navbar-brand uk-navbar-center uk-visible-small">sanlisi</div>
+		</nav>
+		
+		<div class="uk-grid" data-uk-grid-margin>
+		    <div class="uk-width-medium-3-4 uk-row-first">
+			    {% block content %}
+				{% endblock %}
+			</div>
+			
+			<div class="uk-width-medium-1-4">
+			    <div class="uk-panel uk-panel-box uk-text-center">
+				    <img class="uk-border-circle" width="120" height="120" src="" alt="">
+					<h3>作者</h3>
+					<p>xxxxxxxxxxxxxxxxxxxxxxx</p>
+				</div>
+				
+				<div class="uk-panel">
+				    <h3 class="uk-panel-title">其他分类</h3>
+					<ul class="uk-list uk-list-line">
+					    <li><a href="x">dpdk</a></li>
+						<li><a href="x">netmap</a></li>
+						<li><a href="x">kernel</a></li>
+					</ul>
+				</div>
+				
+				<div class="uk-panel">
+				    <h3 class="uk-panel-title">联系作者</h3>
+					<ul class="uk-list">
+					    <li><a herf="xx" class="uk-icon-button uk-icon-weibo"></a></li>
+						<li><a herf="xx" class="uk-icon-button uk-icon-github"></a></li>
+						<li><a herf="xx" class="uk-icon-button uk-icon-twitter"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="offcanvas" class="uk-offcanvas">
+	    <div class="uk-offcanvas-bar">
+		    <ul>
+			    <li class="uk-active"><a href="xx">日志</a></li>
+				<li><a href="xx">教程</a></li>
+				<li><a href="xx">源码</a></li>
+				<li><a href="xx">登陆</a></li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
